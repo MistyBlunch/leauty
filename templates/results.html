@@ -1,93 +1,104 @@
 {% extends "layout.html" %}
 
 {% block body %}
-	<p>Buscaste: {{ subjectSearch }}</p>
-
-	<p>el link es: <a href={{ link }}>{{ link }}</a></p>
-
-	{% for i in range(3) %}
-		<p>GG</p>
-	{% endfor %}
-
-	<!-- <table>
-		<tr>
-		{% for thead in tHeads %}
-			<th> {{ thead }} </th>
-		{% endfor %}
-		</tr>
-		<tr>
-			<tr>
-				<td>
-					<tr>
-						{% for titleList in titleLists %}
-						<td>{{ titleList  }}</td>
-						{% endfor %}
-					</tr>
-				</td>
-			</tr>
-			
-			<td>
-				{% for linkList in linkLists %}
-				<tr>
-					<td>{{ linkList  }}</td>
-				</tr>
-				{% endfor %}
-			</td> 
-		</tr>
-	</table> -->
-
+	<header>
+		<img src="https://s3.amazonaws.com/cdn.laborum.pe/mailer/beautyLib/gusano-cesar-png.png" alt="beauty Logo" class="logo-header">
+		<span class="title-header">BeautyLib</span>
+	</header>
 	<div class="w3-responsive">
-			<table class="w3-table-all">
+		<table cellspacing="0" cellpadding="0">
 			<tr>
-				<td>
+				<td class="no-padding">
 					<table>
-						<tr>
-							{% for thead in tHeads %}
-							<th> {{ thead }} </th>
+						{% if minRanges > 5 %}
+							{% for count in range(10) %}
+							<tr class="beauty tr">
+								<!-- ############################################################### -->
+								{% for imgList in range(1) %}
+								<td class="center">
+									<img src="{{ imgLists[count] }}" alt="imgBook" width="130">
+								</td>
+								{% endfor %}
+								<!-- ############################################################### -->
+								<td>
+									<!-- ############################################################### -->
+									{% for titleList in range(1) %}
+									<h6>
+										{{ titleLists[count] }}
+									</h6>
+									{% endfor %}
+									<!-- ############################################################### -->
+									{% for linkList in range(1) %}
+									<p>
+										<b><a href="{{ linkLists[count] }}" target="_blank" class="beauty a">Link</a></b>
+									</p>
+									{% endfor %}
+									<!-- ############################################################### -->
+									{% for lanList in range(1) %}
+									<h6>
+										{{ lanLists[count] }}
+									</h6>
+									{% endfor %}
+									<!-- ############################################################### -->
+									{% for ageList in range(1) %}
+									<h6>
+										{{ ageLists[count] }}
+									</h6>
+									{% endfor %}
+									<!-- ############################################################### -->
+									{% for autorList in range(1) %}
+									<h6>
+										{{ autorLists[count] }}
+									</h6>
+									{% endfor %} 
+								</td>
+							</tr>
 							{% endfor %}
-						</tr>
-						{% for count in range(5) %}
-						<tr>
-							{% for titleList in range(1) %}
-							<td>
-								<h6>
-									{{ titleLists[count] }}
-								</h6>
-							</td>
+						{% else %}
+							{% for count in range(minRanges) %}
+							<tr class="beauty tr">
+								<!-- ############################################################### -->
+								{% for imgList in range(1) %}
+								<td class="center">
+									<img src="{{ imgLists[count] }}" alt="imgBook" width="130">
+								</td>
+								{% endfor %}
+								<!-- ############################################################### -->
+								<td>
+									<!-- ############################################################### -->
+									{% for titleList in range(1) %}
+									<h6>
+										{{ titleLists[count] }}
+									</h6>
+									{% endfor %}
+									<!-- ############################################################### -->
+									{% for linkList in range(1) %}
+									<p>
+										<b><a href="{{ linkLists[count] }}" target="_blank" class="beauty a">Link</a></b>
+									</p>
+									{% endfor %}
+									<!-- ############################################################### -->
+									{% for lanList in range(1) %}
+									<h6>
+										{{ lanLists[count] }}
+									</h6>
+									{% endfor %}
+									<!-- ############################################################### -->
+									{% for ageList in range(1) %}
+									<h6>
+										{{ ageLists[count] }}
+									</h6>
+									{% endfor %}
+									<!-- ############################################################### -->
+									{% for autorList in range(1) %}
+									<h6>
+										{{ autorLists[count] }}
+									</h6>
+									{% endfor %} 
+								</td>
+							</tr>
 							{% endfor %}
-							{% for linkList in range(1) %}
-							<td>
-								<a href="{{ linkLists[count] }}" target="_blank">Link</a>
-							</td>
-							{% endfor %}
-							{% for lanList in range(1) %}
-							<td>
-								<h6>
-									{{ lanLists[count] }}
-								</h6>
-							</td>
-							{% endfor %}
-							{% for ageList in range(1) %}
-							<td>
-								<h6>
-									{{ ageLists[count] }}
-								</h6>
-							</td>
-							{% endfor %}
-							{% for autorList in range(1) %}
-							<td>
-								<h6>
-									{{ autorLists[count] }}
-								</h6>
-							</td>
-							{% endfor %}
-							{% for imgList in range(1) %}
-							<td>
-								<img src="{{ imgLists[count] }}" alt="imgBook" width="100">
-							</td>
-							{% endfor %}
-						</tr>
-						{% endfor %}
+						{% endif %}
 					</table>
 				</td>
 			</tr>

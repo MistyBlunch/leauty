@@ -1,10 +1,17 @@
 {% extends "layout.html" %}
 
 {% block body %} 
-<div class="block1">
-  <h1>Welcome to</h1>
-  <h4>BeautyLib</h4>
-  <p>"Find the most latest books :D."</p>
-  <img src="http://www.naturalprogramming.com/images/smilingpython.gif">
+<div class="beauty wrapper">
+  <div class="beauty container">
+    <h1>Welcome to</h1>
+    <p>
+      <span>"Find the latest books from the best place:"</span><span><a href="www.libgen.io">LibGen</a></span>
+    </p>
+    <img src="https://s3.amazonaws.com/cdn.laborum.pe/mailer/beautyLib/gusano-cesar-2.png">
+    <form method = "POST">
+      <input name="subject" placeholder="Busca la categoría" type="text" /> <br>
+      <button class="button" name="submitBtn" type="submit">Buscar</button>
+    </form>
+  </div>
 </div>
 {% endblock %}

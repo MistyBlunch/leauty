@@ -1,20 +1,20 @@
+#!/usr/local/bin/python
+# coding=utf-8
 from flask import Flask, flash, redirect, render_template, request, session, abort, url_for
-# import libraries
-from urllib.request import urlopen
+from urllib2 import urlopen
 from bs4 import BeautifulSoup
 import re
+import os, sys
+import sys
+
+reload(sys)
+sys.setdefaultencoding('utf8')
+
 app = Flask(__name__)
 global subjectName
 
 # Pagina principal
-@app.route('/')
-def index():
-  return render_template(
-    'index.html'
-  )
-
-# Pagina de busqueda
-@app.route('/search', methods = ['POST', 'GET'])
+@app.route('/', methods = ['POST', 'GET'] )
 def search():
   if request.method == 'POST':
     if request.form['subject'] != "":
@@ -27,7 +27,7 @@ def search():
   #   return redirect(url_for('results'))
 
   return render_template(
-    'search.html'
+    'index.html'
   )
 
 @app.route('/results/<subject>')
@@ -58,7 +58,7 @@ def results(subject):
     if quantity <= limitNumber:
       titleList.append(title.text)
     quantity += 1
-
+  minRange = len(titleList)
   # For the link
   linkFind = soup.find_all(colspan=re.compile("2"))
   linkList = []
@@ -123,17 +123,18 @@ def results(subject):
   quantity = 0
   imgList = []
   for td in imgFinder:
-    quantity += 1
     if quantity <= limitNumber:
       imgSRC = td.find("a").find("img")['src']
       unionImg = princLink + imgSRC
       imgList.append(unionImg)
+    quantity += 1
 
   return render_template (
     'results.html', 
     subjectSearch = subject, 
     link = page_link, 
     tHeads = tHeads,
+    minRanges = minRange,
     titleLists = titleList,
     linkLists = linkList,
     lanLists = lanList,
@@ -151,9 +152,9 @@ def results(subject):
 # def getMember(name):
 #     return name
 
-@app.route('/<btn>')  #tipo de variable en < >
-def backToHome(btn):
-   if btn =='backHome':
-      return redirect(url_for('index'))
-#    else:
-#    return redirect(url_for('hello_guest',guest = name))
+# @app.route('/<btn>')  #tipo de variable en < >
+# def backToHome(btn):
+#    if btn =='backHome':
+#       return redirect(url_for('index'))
+# #    else:
+# #    return redirect(url_for('hello_guest',guest = name))
