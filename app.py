@@ -1,14 +1,15 @@
 #!/usr/local/bin/python
 # coding=utf-8
 from flask import Flask, flash, redirect, render_template, request, session, abort, url_for
-from urllib2 import urlopen
+#from urllib2 import urlopen
+from urllib.request import urlopen
 from bs4 import BeautifulSoup
 import re
 import os, sys
 import sys
 
-reload(sys)
-sys.setdefaultencoding('utf8')
+#reload(sys)
+#sys.setdefaultencoding('utf8')
 
 app = Flask(__name__)
 global subjectName
