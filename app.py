@@ -59,6 +59,7 @@ def results(subject):
       titleList.append(title.text)
     quantity += 1
   minRange = len(titleList)
+
   # For the link
   linkFind = soup.find_all(colspan=re.compile("2"))
   linkList = []
@@ -70,6 +71,7 @@ def results(subject):
       unionLink = princLink + linkModified
       linkList.append(unionLink)
     quantity += 1
+
   # For the language
   table_finder = soup.find_all(rules=re.compile("cols"))
   lanList = []
@@ -118,6 +120,22 @@ def results(subject):
         autorList.append(finalAutors.text)
       counter += 1 
 
+  # For the publisher
+  table_finder = soup.find_all(rules=re.compile("cols"))
+  quantity = 0
+  counter = 0
+  editList = []
+  for tableEdit in table_finder:
+    counter += 1
+    quantity += 1
+    if quantity <= (limitNumber*2) + limitNumber:
+      trEdit = tableEdit.findAll("tr")
+      if counter%2 != 0:
+        tdEdit = trEdit[4].findAll("td")[1]
+        editList.append(tdEdit.text)
+      else:
+        del tableEdit[counter]
+
   # For the img
   imgFinder = soup.find_all(rowspan=re.compile("20"))
   quantity = 0
@@ -140,6 +158,7 @@ def results(subject):
     lanLists = lanList,
     ageLists = ageList,
     autorLists = autorList,
+    editLists = editList,
     imgLists = imgList
   ) 
 
