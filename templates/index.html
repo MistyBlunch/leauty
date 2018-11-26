@@ -5,10 +5,18 @@
   <div class="beauty container">
     <h1>Welcome to</h1>
     <p>
-      <span class="beauty text">Encuentra los mejores libros de la mejor biblioteca online: </span><span><a href="www.libgen.io" class="lib-page">LibGen</a></span>
+      <span class="beauty text">Encuentra los mejores libros de la mejor biblioteca online: </span><span><a href="http://libgen.io" class="lib-page">LibGen</a></span>
     </p>
     <img src="https://s3.amazonaws.com/cdn.laborum.pe/mailer/beautyLib/gusano-cesar-2.png">
     <form method = "POST">
+      <div>
+        <select name="opt-cat" class="beauty select">
+          <label for="opt-cate">Escoge el modo de filtrado :D</label>
+          <option value="año">Año</option>
+          <option value="editorial">Editorial</option>
+          <option value="paginas">Páginas</option>
+        </select>
+      </div>
       <input name="subject" placeholder="Busca la categoría" type="text" /> <br>
       <button class="button" name="submitBtn" type="submit">Buscar</button>
     </form>

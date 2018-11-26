@@ -18,9 +18,16 @@ global subjectName
 @app.route('/', methods = ['POST', 'GET'] )
 def search():
   if request.method == 'POST':
-    if request.form['subject'] != "":
-      subjectName = request.form['subject'].lower()
-      return redirect(url_for('results', subject=subjectName))
+    subjectForm = request.form['subject']
+    optForm = request.form['opt-cat']
+
+    whiteSpace = subjectForm.strip(' ')
+    if subjectForm != "" and whiteSpace != "":
+      subjectName = subjectForm.lower()
+      return redirect(url_for(
+        'results', subject=subjectName,
+        option = optForm
+        ))
     else:
       return "No se ingresó ningún dato :c"
   # else:
@@ -31,150 +38,172 @@ def search():
     'index.html'
   )
 
-@app.route('/results/<subject>')
-def results(subject):
+@app.route('/results/<subject>/<option>')
+def results(subject, option):
   # El nombre de cada columna
   tHeads = ["Título", "Link", "Lenguaje", "Año", "Autor","Imagen"]
   subjectLen = len(subject)
   if " " in subject:
     subject = subject.replace(" ", "+") 
   if subjectLen > 1:
-    page_link = 'http://libgen.io/search.php?&req=' + subject + '&phrase=1&view=detailed&column=def&sort=year&sortmode=DESC'
-
-  page = urlopen(page_link)
-  soup = BeautifulSoup(page, 'html.parser')
-
-  # Find the table
-  table_finder = soup.find_all(rules=re.compile("cols"))
-  # For the link:
-  princLink = 'http://libgen.io'
-  # Limit number:  YOU CAN EDIT THAT
-  limitNumber = 4
+    if option == 'año':
+      page_link = 'http://libgen.io/search.php?&req=' + subject + '&phrase=1&view=detailed&column=def&sort=year&sortmode=DESC'
+    elif option == 'editorial':
+      page_link = 'http://libgen.io/search.php?&req=' + subject + '&phrase=1&view=detailed&column=def&sort=publisher&sortmode=ASC'
+    elif option == 'paginas':
+      page_link = 'http://libgen.io/search.php?&req=' + subject + '&phrase=1&view=detailed&column=def&sort=pages&sortmode=DESC'
     
-  # Título
-  titleFind = soup.find_all(colspan=re.compile("2"))
-  titleList = []
-  quantity = 0
-  for title in titleFind:
-    if quantity <= limitNumber:
-      titleList.append(title.text)
-    quantity += 1
-  minRange = len(titleList)
+    page = urlopen(page_link)
+    soup = BeautifulSoup(page, 'html.parser')
 
-  # For the link
-  linkFind = soup.find_all(colspan=re.compile("2"))
-  linkList = []
-  quantity = 0
-  for link in linkFind:
-    if quantity <= limitNumber:
-      linkFinder = link.a['href']
-      linkModified = linkFinder.replace('..', '')
-      unionLink = princLink + linkModified
-      linkList.append(unionLink)
-    quantity += 1
+    # Find the table
+    table_finder = soup.find_all(rules=re.compile("cols"))
+    # For the link:
+    princLink = 'http://libgen.io'
+    # Limit number:  YOU CAN EDIT THAT
+    limitNumber = 4
+      
+    # Título
+    titleFind = soup.find_all(colspan=re.compile("2"))
+    titleList = []
+    quantity = 0
+    for title in titleFind:
+      if quantity <= limitNumber:
+        titleList.append(title.text)
+      quantity += 1
+    minRange = len(titleList)
 
-  # For the language
-  table_finder = soup.find_all(rules=re.compile("cols"))
-  lanList = []
-  quantity = 0
-  counter = 0
-  for tableLan in table_finder:
-    counter += 1
-    quantity += 1
-    if quantity <= (limitNumber*2) + limitNumber:
-      tdLan = tableLan.findAll("tr")
-      if counter%2 != 0:
-        tdLan = tdLan[6].findAll("td")[1]
-        lanList.append(tdLan.text)
-      else:
-        del tableLan[counter]
+    # For the link
+    linkFind = soup.find_all(colspan=re.compile("2"))
+    linkList = []
+    quantity = 0
+    for link in linkFind:
+      if quantity <= limitNumber:
+        linkFinder = link.a['href']
+        linkModified = linkFinder.replace('..', '')
+        unionLink = princLink + linkModified
+        linkList.append(unionLink)
+      quantity += 1
 
-  # For the Age
-  table_finder = soup.find_all(rules=re.compile("cols"))
-  quantity = 0
-  counter = 0
-  ageList = []
-  for tableAge in table_finder:
-    counter += 1
-    quantity += 1
-    if quantity <= (limitNumber*2) + limitNumber:
-      trAge = tableAge.findAll("tr")
-      if counter%2 != 0:
-        tdAge = trAge[5].findAll("td")[1]
-        ageList.append(tdAge.text)
-      else:
-        del tableAge[counter]   
+    # For the language
+    table_finder = soup.find_all(rules=re.compile("cols"))
+    lanList = []
+    quantity = 0
+    counter = 0
+    for tableLan in table_finder:
+      counter += 1
+      quantity += 1
+      if quantity <= (limitNumber*2) + limitNumber:
+        tdLan = tableLan.findAll("tr")
+        if counter%2 != 0:
+          tdLan = tdLan[6].findAll("td")[1]
+          lanList.append(tdLan.text)
+        else:
+          del tableLan[counter]
 
-  # For the autor
-  autorFind = soup.find_all(colspan=re.compile("3"))
-  counter = 0
-  quantity = 0
-  autorList = []
-  for bAutor in autorFind:
-    listAutor = bAutor.find_all("b")
-    quantity += 1
-    if quantity <= (limitNumber * 2) + limitNumber:
-      if listAutor == []: 
-          del autorFind[counter]
-      else:
-        finalAutors = listAutor[0]
-        autorList.append(finalAutors.text)
-      counter += 1 
+    # For the Age
+    table_finder = soup.find_all(rules=re.compile("cols"))
+    quantity = 0
+    counter = 0
+    ageList = []
+    for tableAge in table_finder:
+      counter += 1
+      quantity += 1
+      if quantity <= (limitNumber*2) + limitNumber:
+        trAge = tableAge.findAll("tr")
+        if counter%2 != 0:
+          tdAge = trAge[5].findAll("td")[1]
+          ageList.append(tdAge.text)
+        else:
+          del tableAge[counter]   
+    
+    # For the Pages
+    table_finder = soup.find_all(rules=re.compile("cols"))
+    pagList = []
+    quantity = 0
+    counter = 0
+    for tablePag in table_finder:
+      counter += 1
+      quantity += 1
+      if quantity <= (limitNumber*2) + limitNumber:
+        tdPag = tablePag.findAll("tr")
+        if counter%2 != 0:
+          tdPag = tdPag[6].findAll("td")[3]
+          pagList.append(tdPag.text)
+        else:
+          del tablePag[counter]
 
-  # For the publisher
-  table_finder = soup.find_all(rules=re.compile("cols"))
-  quantity = 0
-  counter = 0
-  editList = []
-  for tableEdit in table_finder:
-    counter += 1
-    quantity += 1
-    if quantity <= (limitNumber*2) + limitNumber:
-      trEdit = tableEdit.findAll("tr")
-      if counter%2 != 0:
-        tdEdit = trEdit[4].findAll("td")[1]
-        editList.append(tdEdit.text)
-      else:
-        del tableEdit[counter]
+    # For the autor
+    autorFind = soup.find_all(colspan=re.compile("3"))
+    counter = 0
+    quantity = 0
+    autorList = []
+    for bAutor in autorFind:
+      listAutor = bAutor.find_all("b")
+      quantity += 1
+      if quantity <= (limitNumber * 2) + limitNumber:
+        if listAutor == []: 
+            del autorFind[counter]
+        else:
+          finalAutors = listAutor[0]
+          autorList.append(finalAutors.text)
+        counter += 1 
 
-  # For the img
-  imgFinder = soup.find_all(rowspan=re.compile("20"))
-  quantity = 0
-  imgList = []
-  for td in imgFinder:
-    if quantity <= limitNumber:
-      imgSRC = td.find("a").find("img")['src']
-      unionImg = princLink + imgSRC
-      imgList.append(unionImg)
-    quantity += 1
+    # For the publisher
+    table_finder = soup.find_all(rules=re.compile("cols"))
+    quantity = 0
+    counter = 0
+    editList = []
+    for tableEdit in table_finder:
+      counter += 1
+      quantity += 1
+      if quantity <= (limitNumber*2) + limitNumber:
+        trEdit = tableEdit.findAll("tr")
+        if counter%2 != 0:
+          tdEdit = trEdit[4].findAll("td")[1]
+          editList.append(tdEdit.text)
+        else:
+          del tableEdit[counter]
 
-  return render_template (
-    'results.html', 
-    subjectSearch = subject, 
-    link = page_link, 
-    tHeads = tHeads,
-    minRanges = minRange,
-    titleLists = titleList,
-    linkLists = linkList,
-    lanLists = lanList,
-    ageLists = ageList,
-    autorLists = autorList,
-    editLists = editList,
-    imgLists = imgList
-  ) 
+    # For the img
+    imgFinder = soup.find_all(rowspan=re.compile("20"))
+    quantity = 0
+    imgList = []
+    for td in imgFinder:
+      if quantity <= limitNumber:
+        imgSRC = td.find("a").find("img")['src']
+        unionImg = princLink + imgSRC
+        imgList.append(unionImg)
+      quantity += 1
 
-# @app.route('/aboutUs')
-# def aboutUs():
-#     return 'About us :3'
- 
-# #  is not necesary
-# @app.route('/aboutUs/<string:name>/')
-# def getMember(name):
-#     return name
+    return render_template (
+      'results.html', 
+      subjectSearch = subject, 
+      link = page_link, 
+      tHeads = tHeads,
+      minRanges = minRange,
+      titleLists = titleList,
+      linkLists = linkList,
+      lanLists = lanList,
+      pagLists = pagList,
+      ageLists = ageList,
+      autorLists = autorList,
+      editLists = editList,
+      imgLists = imgList
+    ) 
 
-# @app.route('/<btn>')  #tipo de variable en < >
-# def backToHome(btn):
-#    if btn =='backHome':
-#       return redirect(url_for('index'))
-# #    else:
-# #    return redirect(url_for('hello_guest',guest = name))
+  # @app.route('/aboutUs')
+  # def aboutUs():
+  #     return 'About us :3'
+  
+  # #  is not necesary
+  # @app.route('/aboutUs/<string:name>/')
+  # def getMember(name):
+  #     return name
+
+  # @app.route('/<btn>')  #tipo de variable en < >
+  # def backToHome(btn):
+  #    if btn =='backHome':
+  #       return redirect(url_for('index'))
+  # #    else:
+  # #    return redirect(url_for('hello_guest',guest = name))
