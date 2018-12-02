@@ -1,8 +1,8 @@
 #!/usr/local/bin/python
 # coding=utf-8
 from flask import Flask, flash, redirect, render_template, request, session, abort, url_for
-from urllib2 import urlopen
-# from urllib.request import urlopen
+# from urllib2 import urlopen
+from urllib.request import urlopen
 from bs4 import BeautifulSoup
 import re
 import os, sys
@@ -13,6 +13,16 @@ import sys
 
 app = Flask(__name__)
 global subjectName
+
+
+#Error page
+@app.errorhandler(404)
+def page_not_found(error):
+  return render_template('page_not_found.html'), 404
+
+@app.errorhandler(500)
+def error_ocurred(error):
+  return render_template('page_not_found.html'), 500
 
 # Pagina principal
 @app.route('/', methods = ['POST', 'GET'] )
@@ -54,6 +64,8 @@ def results(subject, option):
       page_link = 'http://libgen.io/search.php?&req=' + subject + '&phrase=1&view=detailed&column=def&sort=publisher&sortmode=ASC'
     elif option == 'paginas':
       page_link = 'http://libgen.io/search.php?&req=' + subject + '&phrase=1&view=detailed&column=def&sort=pages&sortmode=DESC'
+    else:
+       page_link = 'page_not_found.html'
     
     page = urlopen(page_link)
     soup = BeautifulSoup(page, 'html.parser')
@@ -73,7 +85,7 @@ def results(subject, option):
       if quantity <= limitNumber:
         titleList.append(title.text)
       quantity += 1
-    minRange = len(titleList)
+    minRange = len(titleList)  #Identifying the quantity of results
 
     # For the link
     linkFind = soup.find_all(colspan=re.compile("2"))
@@ -175,6 +187,8 @@ def results(subject, option):
       if quantity <= limitNumber:
         imgSRC = td.find("a").find("img")['src']
         unionImg = princLink + imgSRC
+        if unionImg == "http://libgen.io/covers/blank.png":
+          unionImg = "https://s3.amazonaws.com/cdn.laborum.pe/mailer/beautyLib/sad.png"
         imgList.append(unionImg)
       quantity += 1
 
@@ -184,6 +198,8 @@ def results(subject, option):
       link = page_link, 
       tHeads = tHeads,
       minRanges = minRange,
+      optionSelect = option,
+      
       titleLists = titleList,
       linkLists = linkList,
       lanLists = lanList,

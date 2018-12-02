@@ -6,130 +6,161 @@
 		<span class="title-header"><a href="/" style="text-decoration:none; color: #8ac640;">BeautyLib</a></span>
 	</header>
 	<div class="w3-responsive">
-		<table cellspacing="0" cellpadding="0">
-			<tr>
-				<td class="no-padding">
-					<table>
-						{% if minRanges > 5 %}
-							{% for count in range(10) %}
-							<tr class="beauty tr">
-								<!-- ############################################################### -->
-								{% for imgList in range(1) %}
-								<td class="center">
-									<a href="{{ linkLists[count] }}" target="_blank" class="beauty a">
-										<img src="{{ imgLists[count] }}" alt="imgBook" width="130">
-									</a>
-								</td>
+		{% if minRanges == 0 %}
+			<div class="other-opt-cont">
+				<h2 class="no-found">Lo siento, la categoría que buscaste no se encuentra filtrada por esta opción, prueba con estas otras:</h2>
+				{% if optionSelect == "defecto" %}
+				<ul>
+					<a class="beauty a" href="/"><li>Por Año</li></a>
+					<a class="beauty a" href="/"><li>Por Editorial</li></a>
+					<a class="beauty a" href="/"><li>Por Número de Páginas</li></a>
+				</ul>
+				{% elif optionSelect == "año" %}
+				<ul>
+					<a class="beauty a" href="/"><li>Por Defecto</li></a>
+					<a class="beauty a" href="/"><li>Por Editorial</li></a>
+					<a class="beauty a" href="/"><li>Por Número de Páginas</li></a>
+				</ul>
+				{% elif optionSelect == "editorial" %}
+				<ul>
+					<a class="beauty a" href="/"><li>Por Defecto</li></a>
+					<a class="beauty a" href="/"><li>Por Año</li></a>
+					<a class="beauty a" href="/"><li>Por Número de Páginas</li></a>
+				</ul>
+				{% elif optionSelect == "paginas" %}
+				<ul>
+					<a class="beauty a" href="/"><li>Por Defecto</li></a>
+					<a class="beauty a" href="/"><li>Por Año</li></a>
+					<a class="beauty a" href="/"><li>Por Editorial</li></a>
+				</ul>
+				{% endif %}
+			</div>
+		{% else %}
+			<table cellspacing="0" cellpadding="0">
+				<tr>
+					<td class="no-padding">
+						<table>
+							{% if minRanges > 5 %}
+								{% for count in range(10) %}
+								<tr class="beauty tr">
+									<!-- ############################################################### -->
+									{% for imgList in range(1) %}
+									<td class="center">
+										<a href="{{ linkLists[count] }}" target="_blank" class="beauty a">
+											<img src="{{ imgLists[count] }}" alt="imgBook" width="130">
+										</a>
+									</td>
+									{% endfor %}
+									<!-- #############################################j################## -->
+									<td>
+										<!-- ############################################################### -->
+										{% for titleList in range(1) %}
+										<h6>
+											<span>Nombre: </span>{{ titleLists[count] }}
+										</h6>
+										{% endfor %}
+										<!-- ############################################################### -->
+										{% for editList in range(1) %}
+										<h6>
+											<span>Editorial: </span>{{ editLists[count] }}
+										</h6>
+										{% endfor %}
+										<!-- ############################################################### -->
+										{% for linkList in range(1) %}
+										<p>
+											<span>Link: </span><b><a href="{{ linkLists[count] }}" target="_blank" class="beauty a">Más Detalles</a></b>
+										</p>
+										{% endfor %}
+										<!-- ############################################################### -->
+										{% for lanList in range(1) %}
+										<h6>
+											<span>Lenguaje: </span>{{ lanLists[count] }}
+										</h6>
+										{% endfor %}
+										<!-- ############################################################### -->
+										{% for ageList in range(1) %}
+										<h6>
+											<span>Año: </span>{{ ageLists[count] }}
+										</h6>
+										{% endfor %}
+										<!-- ############################################################### -->
+										{% for autorList in range(1) %}
+										<h6>
+											<span>Autor: </span>{{ autorLists[count] }}
+										</h6>
+										{% endfor %} 
+										<!-- ############################################################### -->
+										{% for pagList in range(1) %}
+										<h6>
+											<span>Número de Páginas: </span>{{ pagLists[count] }}
+										</h6>
+										{% endfor %} 
+									</td>
+								</tr>
 								{% endfor %}
-								<!-- #############################################j################## -->
-								<td>
+							{% else %}
+								{% for count in range(minRanges) %}
+								<tr class="beauty tr">
 									<!-- ############################################################### -->
-									{% for titleList in range(1) %}
-									<h6>
-										<span>Nombre: </span>{{ titleLists[count] }}
-									</h6>
+									{% for imgList in range(1) %}
+									<td class="center">
+										<a href="{{ linkLists[count] }}" target="_blank" class="beauty a">
+											<img src="{{ imgLists[count] }}" alt="imgBook" width="130">
+										</a>
+									</td>
 									{% endfor %}
 									<!-- ############################################################### -->
-									{% for editList in range(1) %}
-									<h6>
-										<span>Editorial: </span>{{ editLists[count] }}
-									</h6>
-									{% endfor %}
-									<!-- ############################################################### -->
-									{% for linkList in range(1) %}
-									<p>
-										<span>Link: </span><b><a href="{{ linkLists[count] }}" target="_blank" class="beauty a">Link</a></b>
-									</p>
-									{% endfor %}
-									<!-- ############################################################### -->
-									{% for lanList in range(1) %}
-									<h6>
-										<span>Lenguaje: </span>{{ lanLists[count] }}
-									</h6>
-									{% endfor %}
-									<!-- ############################################################### -->
-									{% for ageList in range(1) %}
-									<h6>
-										<span>Año: </span>{{ ageLists[count] }}
-									</h6>
-									{% endfor %}
-									<!-- ############################################################### -->
-									{% for autorList in range(1) %}
-									<h6>
-										<span>Autor: </span>{{ autorLists[count] }}
-									</h6>
-									{% endfor %} 
-									<!-- ############################################################### -->
-									{% for pagList in range(1) %}
-									<h6>
-										<span>Número de Páginas: </span>{{ pagLists[count] }}
-									</h6>
-									{% endfor %} 
-								</td>
-							</tr>
-							{% endfor %}
-						{% else %}
-							{% for count in range(minRanges) %}
-							<tr class="beauty tr">
-								<!-- ############################################################### -->
-								{% for imgList in range(1) %}
-								<td class="center">
-									<a href="{{ linkLists[count] }}" target="_blank" class="beauty a">
-										<img src="{{ imgLists[count] }}" alt="imgBook" width="130">
-									</a>
-								</td>
+									<td>
+										<!-- ############################################################### -->
+										{% for titleList in range(1) %}
+										<h6>
+											<span>Nombre: </span>{{ titleLists[count] }}
+										</h6>
+										{% endfor %}
+										<!-- ############################################################### -->
+										{% for editList in range(1) %}
+										<h6>
+											<span>Editorial: </span>{{ editLists[count] }}
+										</h6>
+										{% endfor %}
+										<!-- ############################################################### -->
+										{% for linkList in range(1) %}
+										<p>
+											<span>Link: </span><b><a href="{{ linkLists[count] }}" target="_blank" class="beauty a">Más Detalles</a></b>
+										</p>
+										{% endfor %}
+										<!-- ############################################################### -->
+										{% for lanList in range(1) %}
+										<h6>
+											<span>Lenguaje: </span>{{ lanLists[count] }}
+										</h6>
+										{% endfor %}
+										<!-- ############################################################### -->
+										{% for ageList in range(1) %}
+										<h6>
+											<span>Año: </span>{{ ageLists[count] }}
+										</h6>
+										{% endfor %}
+										<!-- ############################################################### -->
+										{% for autorList in range(1) %}
+										<h6>
+											<span>Autor: </span>{{ autorLists[count] }}
+										</h6>
+										{% endfor %} 
+										<!-- ############################################################### -->
+										{% for pagList in range(1) %}
+										<h6>
+											<span>Número de Páginas: </span>{{ pagLists[count] }}
+										</h6>
+										{% endfor %} 
+									</td>
+								</tr>
 								{% endfor %}
-								<!-- ############################################################### -->
-								<td>
-									<!-- ############################################################### -->
-									{% for titleList in range(1) %}
-									<h6>
-										<span>Nombre: </span>{{ titleLists[count] }}
-									</h6>
-									{% endfor %}
-									<!-- ############################################################### -->
-									{% for editList in range(1) %}
-									<h6>
-										<span>Editorial: </span>{{ editLists[count] }}
-									</h6>
-									{% endfor %}
-									<!-- ############################################################### -->
-									{% for linkList in range(1) %}
-									<p>
-										<span>Link: </span><b><a href="{{ linkLists[count] }}" target="_blank" class="beauty a">Enlace al libro</a></b>
-									</p>
-									{% endfor %}
-									<!-- ############################################################### -->
-									{% for lanList in range(1) %}
-									<h6>
-										<span>Lenguaje: </span>{{ lanLists[count] }}
-									</h6>
-									{% endfor %}
-									<!-- ############################################################### -->
-									{% for ageList in range(1) %}
-									<h6>
-										<span>Año: </span>{{ ageLists[count] }}
-									</h6>
-									{% endfor %}
-									<!-- ############################################################### -->
-									{% for autorList in range(1) %}
-									<h6>
-										<span>Autor: </span>{{ autorLists[count] }}
-									</h6>
-									{% endfor %} 
-									<!-- ############################################################### -->
-									{% for pagList in range(1) %}
-									<h6>
-										<span>Número de Páginas: </span>{{ pagLists[count] }}
-									</h6>
-									{% endfor %} 
-								</td>
-							</tr>
-							{% endfor %}
-						{% endif %}
-					</table>
-				</td>
-			</tr>
-		</table>
+							{% endif %}
+						</table>
+					</td>
+				</tr>
+			</table>
+		{% endif %}
 	</div>
 {% endblock %}
