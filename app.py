@@ -1,8 +1,8 @@
 #!/usr/local/bin/python
 # coding=utf-8
 from flask import Flask, flash, redirect, render_template, request, session, abort, url_for
-# from urllib2 import urlopen
-from urllib.request import urlopen
+from urllib2 import urlopen
+# from urllib.request import urlopen
 from bs4 import BeautifulSoup
 import re
 import os, sys
@@ -56,8 +56,8 @@ def results(subject, option):
   if " " in subject:
     subject = subject.replace(" ", "+") 
   if subjectLen > 1:
-    if option == 'año':
-      page_link = 'http://libgen.io/search.php?&req=' + subject + '&phrase=1&view=detailed&column=def&sort=year&sortmode=DESC'
+    if option == 'anno':
+      page_link ='http://libgen.io/search.php?&req=' + subject + '&phrase=1&view=detailed&column=def&sort=year&sortmode=DESC'
     elif option == 'defecto':
       page_link = 'http://libgen.io/search.php?req=' + subject + '&open=0&res=25&view=detailed&phrase=1&column=def'
     elif option == 'editorial':

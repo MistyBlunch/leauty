@@ -8,14 +8,14 @@
 	<div class="w3-responsive">
 		{% if minRanges == 0 %}
 			<div class="other-opt-cont">
-				<h2 class="no-found">Lo siento, la categoría que buscaste no se encuentra filtrada por esta opción, prueba con estas otras:</h2>
+				<h2 class="no-found">Lo siento, la categoría que buscaste no se encuentra ordenada por esta opción, prueba con estas otras:</h2>
 				{% if optionSelect == "defecto" %}
 				<ul>
 					<a class="beauty a" href="/"><li>Por Año</li></a>
 					<a class="beauty a" href="/"><li>Por Editorial</li></a>
 					<a class="beauty a" href="/"><li>Por Número de Páginas</li></a>
 				</ul>
-				{% elif optionSelect == "año" %}
+				{% elif optionSelect == "anno" %}
 				<ul>
 					<a class="beauty a" href="/"><li>Por Defecto</li></a>
 					<a class="beauty a" href="/"><li>Por Editorial</li></a>
@@ -40,7 +40,7 @@
 				<tr>
 					<td class="no-padding">
 						<table>
-							{% if minRanges > 5 %}
+							{% if minRanges > 10 %}
 								{% for count in range(10) %}
 								<tr class="beauty tr">
 									<!-- ############################################################### -->
@@ -82,6 +82,7 @@
 										<h6>
 											<span>Año: </span>{{ ageLists[count] }}
 										</h6>
+										
 										{% endfor %}
 										<!-- ############################################################### -->
 										{% for autorList in range(1) %}
