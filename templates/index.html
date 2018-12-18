@@ -11,14 +11,14 @@
     <form method = "POST">
       <div>
         <select name="opt-cat" class="beauty select">
-          <label for="opt-cate">Escoge el modo de filtrado</label>
-          <option value="defecto">Por Defecto</option>
-          <option value="anno">Por Año</option>
-          <option value="editorial">Por Editorial</option>
-          <option value="paginas">Por Páginas</option>
+          <label for="opt-cate">Ordenar por:</label>
+          <option value="defecto">Defecto</option>
+          <option value="anno">Año</option>
+          <option value="editorial">Editorial</option>
+          <option value="paginas">Páginas</option>
         </select>
       </div>
-      <input name="subject" placeholder="Busca la categoría" type="text" /> <br>
+      <input name="subject" placeholder="Busca la categoría" type="text" autocomplete="off"/> <br>
       <button class="button" name="submitBtn" type="submit">Buscar</button>
     </form>
   </div>
