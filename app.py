@@ -1,18 +1,13 @@
 #!/usr/local/bin/python
 # coding=utf-8
-from flask import Flask, flash, redirect, render_template, request, session, abort, url_for
+from flask import Flask, redirect, render_template, request, url_for
 # from urllib2 import urlopen
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
 import re
-import os, sys
-import sys
-
-#reload(sys)
-#sys.setdefaultencoding('utf8')
 
 app = Flask(__name__)
-global subjectName
+global subject_name
 
 
 #Error page
@@ -28,20 +23,20 @@ def error_ocurred(error):
 @app.route('/', methods = ['POST', 'GET'] )
 def search():
   if request.method == 'POST':
-    subjectForm = request.form['subject']
-    optForm = request.form['opt-cat']
+    subject_form = request.form['subject']
+    opt_form = request.form['opt-cat']
 
-    whiteSpace = subjectForm.strip(' ')
-    if subjectForm != "" and whiteSpace != "":
-      subjectName = subjectForm.lower()
+    white_space = subject_form.strip(' ')
+    if subject_form != "" and white_space != "":
+      subject_name = subject_form.lower()
       return redirect(url_for(
-        'results', subject=subjectName,
-        option = optForm
+        'results', subject=subject_name,
+        option = opt_form
         ))
     else:
       return "No se ingresó ningún dato :c"
   # else:
-  #   subjectName = request.args.get('subject')
+  #   subject_name = request.args.get('subject')
   #   return redirect(url_for('results'))
 
   return render_template(
@@ -51,11 +46,11 @@ def search():
 @app.route('/results/<subject>/<option>')
 def results(subject, option):
   # El nombre de cada columna
-  tHeads = ["Título", "Link", "Lenguaje", "Año", "Autor","Imagen"]
-  subjectLen = len(subject)
+  t_heads = ["Título", "Link", "Lenguaje", "Año", "Autor","Imagen"]
+  subject_len = len(subject)
   if " " in subject:
     subject = subject.replace(" ", "+") 
-  if subjectLen > 1:
+  if subject_len > 1:
     if option == 'anno':
       page_link ='http://libgen.io/search.php?&req=' + subject + '&phrase=1&view=detailed&column=def&sort=year&sortmode=DESC'
     elif option == 'defecto':
@@ -73,141 +68,141 @@ def results(subject, option):
     # Find the table
     table_finder = soup.find_all(rules=re.compile("cols"))
     # For the link:
-    princLink = 'http://libgen.io'
+    princ_link = 'http://libgen.io'
     # Limit number:  YOU CAN EDIT THAT
-    limitNumber = 9
+    limit_number = 9
       
     # Título
-    titleFind = soup.find_all(colspan=re.compile("2"))
-    titleList = []
+    title_find = soup.find_all(colspan=re.compile("2"))
+    title_list = []
     quantity = 0
-    for title in titleFind:
-      if quantity <= limitNumber:
-        titleList.append(title.text)
+    for title in title_find:
+      if quantity <= limit_number:
+        title_list.append(title.text)
       quantity += 1
-    minRange = len(titleList)  #Identifying the quantity of results
+    min_range = len(title_list)  #Identifying the quantity of results
 
     # For the link
-    linkFind = soup.find_all(colspan=re.compile("2"))
-    linkList = []
+    link_find = soup.find_all(colspan=re.compile("2"))
+    link_list = []
     quantity = 0
-    for link in linkFind:
-      if quantity <= limitNumber:
-        linkFinder = link.a['href']
-        linkModified = linkFinder.replace('..', '')
-        unionLink = princLink + linkModified
-        linkList.append(unionLink)
+    for link in link_find:
+      if quantity <= limit_number:
+        link_finder = link.a['href']
+        link_modified = link_finder.replace('..', '')
+        union_link = princ_link + link_modified
+        link_list.append(union_link)
       quantity += 1
 
     # For the language
     table_finder = soup.find_all(rules=re.compile("cols"))
-    lanList = []
+    lan_list = []
     quantity = 0
     counter = 0
-    for tableLan in table_finder:
+    for table_lan in table_finder:
       counter += 1
       quantity += 1
-      if quantity <= (limitNumber*2) + limitNumber:
-        tdLan = tableLan.findAll("tr")
+      if quantity <= (limit_number*2) + limit_number:
+        td_lan = table_lan.findAll("tr")
         if counter%2 != 0:
-          tdLan = tdLan[6].findAll("td")[1]
-          lanList.append(tdLan.text)
+          td_lan = td_lan[6].findAll("td")[1]
+          lan_list.append(td_lan.text)
         else:
-          del tableLan[counter]
+          del table_lan[counter]
 
     # For the Age
     table_finder = soup.find_all(rules=re.compile("cols"))
     quantity = 0
     counter = 0
-    ageList = []
-    for tableAge in table_finder:
+    age_list = []
+    for table_age in table_finder:
       counter += 1
       quantity += 1
-      if quantity <= (limitNumber*2) + limitNumber:
-        trAge = tableAge.findAll("tr")
+      if quantity <= (limit_number*2) + limit_number:
+        trAge = table_age.findAll("tr")
         if counter%2 != 0:
-          tdAge = trAge[5].findAll("td")[1]
-          ageList.append(tdAge.text)
+          td_age = trAge[5].findAll("td")[1]
+          age_list.append(td_age.text)
         else:
-          del tableAge[counter]   
+          del table_age[counter]   
     
     # For the Pages
     table_finder = soup.find_all(rules=re.compile("cols"))
-    pagList = []
+    pag_list = []
     quantity = 0
     counter = 0
-    for tablePag in table_finder:
+    for table_pag in table_finder:
       counter += 1
       quantity += 1
-      if quantity <= (limitNumber*2) + limitNumber:
-        tdPag = tablePag.findAll("tr")
+      if quantity <= (limit_number*2) + limit_number:
+        td_pag = table_pag.findAll("tr")
         if counter%2 != 0:
-          tdPag = tdPag[6].findAll("td")[3]
-          pagList.append(tdPag.text)
+          td_pag = td_pag[6].findAll("td")[3]
+          pag_list.append(td_pag.text)
         else:
-          del tablePag[counter]
+          del table_pag[counter]
 
     # For the autor
-    autorFind = soup.find_all(colspan=re.compile("3"))
+    autor_find = soup.find_all(colspan=re.compile("3"))
     counter = 0
     quantity = 0
-    autorList = []
-    for bAutor in autorFind:
-      listAutor = bAutor.find_all("b")
+    autor_list = []
+    for b_autor in autor_find:
+      list_autor = b_autor.find_all("b")
       quantity += 1
-      if quantity <= (limitNumber * 2) + limitNumber:
-        if listAutor == []: 
-            del autorFind[counter]
+      if quantity <= (limit_number * 2) + limit_number:
+        if list_autor == []: 
+            del autor_find[counter]
         else:
-          finalAutors = listAutor[0]
-          autorList.append(finalAutors.text)
+          final_autors = list_autor[0]
+          autor_list.append(final_autors.text)
         counter += 1 
 
     # For the publisher
     table_finder = soup.find_all(rules=re.compile("cols"))
     quantity = 0
     counter = 0
-    editList = []
-    for tableEdit in table_finder:
+    edit_list = []
+    for table_edit in table_finder:
       counter += 1
       quantity += 1
-      if quantity <= (limitNumber*2) + limitNumber:
-        trEdit = tableEdit.findAll("tr")
+      if quantity <= (limit_number*2) + limit_number:
+        tr_edit = table_edit.findAll("tr")
         if counter%2 != 0:
-          tdEdit = trEdit[4].findAll("td")[1]
-          editList.append(tdEdit.text)
+          td_edit = tr_edit[4].findAll("td")[1]
+          edit_list.append(td_edit.text)
         else:
-          del tableEdit[counter]
+          del table_edit[counter]
 
     # For the img
-    imgFinder = soup.find_all(rowspan=re.compile("20"))
+    img_finder = soup.find_all(rowspan=re.compile("20"))
     quantity = 0
-    imgList = []
-    for td in imgFinder:
-      if quantity <= limitNumber:
-        imgSRC = td.find("a").find("img")['src']
-        unionImg = princLink + imgSRC
-        if unionImg == "http://libgen.io/covers/blank.png":
-          unionImg = "https://s3.amazonaws.com/cdn.laborum.pe/mailer/beautyLib/sad.png"
-        imgList.append(unionImg)
+    img_list = []
+    for td in img_finder:
+      if quantity <= limit_number:
+        img_src = td.find("a").find("img")['src']
+        union_img = princ_link + img_src
+        if union_img == "http://libgen.io/covers/blank.png":
+          union_img = "https://s3.amazonaws.com/cdn.laborum.pe/mailer/beautyLib/sad.png"
+        img_list.append(union_img)
       quantity += 1
 
     return render_template (
       'results.html', 
-      subjectSearch = subject, 
+      subject_search = subject, 
       link = page_link, 
-      tHeads = tHeads,
-      minRanges = minRange,
+      t_heads = t_heads,
+      min_ranges = min_range,
       optionSelect = option,
       
-      titleLists = titleList,
-      linkLists = linkList,
-      lanLists = lanList,
-      pagLists = pagList,
-      ageLists = ageList,
-      autorLists = autorList,
-      editLists = editList,
-      imgLists = imgList
+      title_lists = title_list,
+      link_lists = link_list,
+      lan_lists = lan_list,
+      pag_lists = pag_list,
+      age_lists = age_list,
+      autor_lists = autor_list,
+      edit_lists = edit_list,
+      img_lists = img_list
     ) 
 
   # @app.route('/aboutUs')
