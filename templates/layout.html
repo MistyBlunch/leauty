@@ -25,6 +25,7 @@ body {
 
 .container {
     text-align: center;
+    width: 70%;
 }
 
 header {
@@ -64,6 +65,9 @@ p {
     font-family: 'Hind Siliguri', sans-serif;
 
 }
+.beauty.img {
+    width: 500px;
+}
 
 .logo-header {
     width: 85px;
@@ -73,25 +77,29 @@ p {
 label.beauty.text {
     color: #5b5b5b;
     float: left;
+    font-size: 24px;
 }
 
 .beauty.text, .beauty.text a {
     font-family: 'Hind Siliguri', sans-serif;
 }
 
+.text-container {
+    padding-bottom: 1rem;
+}
+
 .lib-page {
-    font-style: oblique;
     color: #000000;
     text-decoration: none;
 }
 
 .beauty.select {
     width: 100%;
-    height: 2rem;
     border-color: #cccccc;
     color: gray;
     padding: .2rem;
     background-color: transparent;
+    font-size: 16px;
 }
 
 .title-header {
@@ -102,11 +110,11 @@ label.beauty.text {
     color: #8ac640;
 }
 
-h1{
+.ty-text{
     font-family: 'Amatic SC', cursive;
     font-weight: normal;
     color: #8ac640;
-    font-size: 4em;
+    font-size: 8rem;
 }
 h4 {
     color: black;
@@ -122,13 +130,14 @@ input[type=text] {
     -webkit-transition: 0.5s;
     transition: 0.5s;
     outline: none;
+    font-size: 17px;
 }
 
 input[type=text]:focus {
     border: 3px solid #8b8b8b;
 }
 
-.button {
+.beauty.button {
     background-color: #8ac640;
     border: none;
     color: white;
@@ -140,17 +149,24 @@ input[type=text]:focus {
     margin: 2px 1px;
     cursor: pointer;
     border-radius: 8px;
+    font-size: 20px;
 }
 
-.button:hover {
+.beauty.button:hover {
     background-color: #8ac640bd;
+}
+
+.beauty.form{
+    margin: auto;
+    width: 75%;
 }
 
 table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
-    width: 100%;
+    width: 90%;
     border: none;
+    margin: auto;
 }
 
 .beauty.tr {
@@ -173,6 +189,21 @@ p.span, span {
 
 .center {
     text-align: center;
+}
+
+@media (max-width: 600px) {
+    .ty-text{
+        font-size: 8rem;
+    }
+    .beauty.select {
+        font-size: 25px;
+    }
+    .input[type=text] {
+        font-size: 25px;
+    }
+    .beauty.button {
+        font-size: 25px;
+    }
 }
 </style>
  
