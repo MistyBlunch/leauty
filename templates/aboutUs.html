@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block body %} 
+<div class="beauty wrapper">
+  <div class="beauty container">
+    <h1 class="ty-text">Gracias por usar</h1>
+    <img class="beauty img" src="https://s3.amazonaws.com/cdn.laborum.pe/mailer/beautyLib/gusano-cesar-2.png">
+    <div class="beauty text-container">
+      <span class="beauty text">Aquí encontrarás los mejores libros de la mejor biblioteca online: </span><span><a href="http://libgen.io" class="lib-page">LibGen</a></span>
+    </div>
+    <form class="beauty form" method="POST">
+      <div>
+        <label  class="beauty text" for="opt-cate">Ordenar por:</label>
+        <select name="opt-cat" class="beauty select">
+          <option value="defecto">Defecto</option>
+          <option value="anno">Año</option>
+          <option value="editorial">Editorial</option>
+          <option value="paginas">Páginas</option>
+        </select>
+      </div>
+      <input name="subject" placeholder="Busca la categoría" type="text" autocomplete="off"/> <br>
+      <button class="beauty button" name="submitBtn" type="submit">Buscar</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

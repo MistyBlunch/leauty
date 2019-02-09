@@ -1,10 +1,12 @@
 {% extends "layout.html" %}
 
 {% block body %}
-	<header>
-		<a href="/"><img src="https://s3.amazonaws.com/cdn.laborum.pe/mailer/beautyLib/gusano-cesar-png.png" alt="beauty Logo" class="logo-header"></a>
-		<span class="title-header"><a href="/" style="text-decoration:none; color: #8ac640;">BeautyLib</a></span>
-	</header>
+	<div class="container is-fluid flex-cont">
+		<figure class="image is-128x128">
+				<a href="/"><img src="https://s3.amazonaws.com/cdn.laborum.pe/mailer/beautyLib/gusano-cesar-png.png" alt="beauty Logo" class="logo-header"></a>
+		</figure>
+		<h3 class="title is-3 head-title "><a href="/" style="text-decoration:none; color: #8ac640;">BeautyLib</a></h3>
+	</div>
 	<div>
 		{% if min_ranges == 0 %}
 			<div class="other-opt-cont">
@@ -36,10 +38,10 @@
 				{% endif %}
 			</div>
 		{% else %}
-			<table cellspacing="0" cellpadding="0">
+			<table cellspacing="0" cellpadding="0" class="table is-hoverable">
 				<tr>
 					<td class="no-padding">
-						<table>
+						<table class="table is-hoverable">
 							{% if min_ranges > 10 %}
 								{% for count in range(10) %}
 								<tr class="beauty tr">
