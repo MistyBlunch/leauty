@@ -1,8 +1,8 @@
 #!/usr/local/bin/python
 # coding=utf-8
 from flask import Flask, redirect, render_template, request, url_for
-from urllib2 import urlopen
-# from urllib.request import urlopen
+# from urllib2 import urlopen
+from urllib.request import urlopen
 from bs4 import BeautifulSoup
 import re
 
@@ -205,9 +205,4 @@ def results(subject, option):
       img_lists = img_list
     ) 
 
-@app.route('/aboutUs')
-def aboutUs():
-    return render_template (
-      'aboutUs.html'
-    )
   
