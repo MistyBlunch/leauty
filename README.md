@@ -1,11 +1,10 @@
 # Leauty App
-![Leauty App preview](/images/banner.png)[1]
-[![Python][2]][1] [![HTML5][3]][1] [![CSS3][4]][1] [![BeautifulSoup][5]][1] [![Flask][6]][1]
+![Leauty App preview](/images/banner.png)
 
 A little web scraping application in Beautiful Soup and Flask that provides the first 10 results of [libgen.io]([http://libgen.io/)
 
-----
-##How to use
+
+## How to use
 1. Clone the repository
     ```
     git clone https://github.com/MistyBlunch/leauty.git
