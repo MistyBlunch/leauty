@@ -54,13 +54,13 @@ def results(subject, option):
     subject = subject.replace(" ", "+") 
   if subject_len > 1:
     if option == 'anno':
-      page_link ='http://libgen.io/search.php?&req=' + subject + '&phrase=1&view=detailed&column=def&sort=year&sortmode=DESC'
+      page_link ='http://libgen.is/search.php?&req=' + subject + '&phrase=1&view=detailed&column=def&sort=year&sortmode=DESC'
     elif option == 'defecto':
-      page_link = 'http://libgen.io/search.php?req=' + subject + '&open=0&res=25&view=detailed&phrase=1&column=def'
+      page_link = 'http://libgen.is/search.php?req=' + subject + '&open=0&res=25&view=detailed&phrase=1&column=def'
     elif option == 'editorial':
-      page_link = 'http://libgen.io/search.php?&req=' + subject + '&phrase=1&view=detailed&column=def&sort=publisher&sortmode=ASC'
+      page_link = 'http://libgen.is/search.php?&req=' + subject + '&phrase=1&view=detailed&column=def&sort=publisher&sortmode=ASC'
     elif option == 'paginas':
-      page_link = 'http://libgen.io/search.php?&req=' + subject + '&phrase=1&view=detailed&column=def&sort=pages&sortmode=DESC'
+      page_link = 'http://libgen.is/search.php?&req=' + subject + '&phrase=1&view=detailed&column=def&sort=pages&sortmode=DESC'
     else:
        page_link = 'page_not_found.html'
     
@@ -70,7 +70,7 @@ def results(subject, option):
     # Find the table
     table_finder = soup.find_all(rules=re.compile("cols"))
     # For the link:
-    princ_link = 'http://libgen.io'
+    princ_link = 'http://libgen.is'
     # Limit number:  YOU CAN EDIT THAT
     limit_number = 9
       
@@ -184,7 +184,7 @@ def results(subject, option):
       if quantity <= limit_number:
         img_src = td.find("a").find("img")['src']
         union_img = princ_link + img_src
-        if union_img == "http://libgen.io/covers/blank.png":
+        if union_img == "http://libgen.is/covers/blank.png":
           union_img = "https://s3.amazonaws.com/cdn.laborum.pe/mailer/beautyLib/sad.png"
         img_list.append(union_img)
       quantity += 1
